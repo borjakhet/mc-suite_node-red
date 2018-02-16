@@ -19,9 +19,11 @@ If you want to test the latest code from git, here's how to get started:
         
 4. In /homedir/.node-red
 
-For the Savvy nodes
+For the Savvy nodes:
+        
         npm link savvy-contrib
         
-For the R nodes
+For the R nodes:
+        
         npm link RServe-contrib
         
