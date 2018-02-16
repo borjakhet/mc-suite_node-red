@@ -19,5 +19,11 @@ If you want to test the latest code from git, here's how to get started:
         
 4. In /homedir/.node-red
 
-        npm link node-red-mcsuite
+For the Savvy nodes:
+        
+        npm link savvy-contrib
+        
+For the R nodes:
+        
+        npm link rserve-contrib
         
