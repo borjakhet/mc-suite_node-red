@@ -3,12 +3,45 @@
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
+
     <br/>
     <div class="form-row">
         <label for="node-input-endpoint"><i class="fa fa-tag"></i> Endpoint</label>
         <input type="text" id="node-input-endpoint" placeholder="endpoint">
     </div>
+
+    <div class="form-row">
+        <label for="node-input-key"><i class="fa fa-tag"></i> Key</label>
+        <input type="text" id="node-input-key" placeholder="key">
+    </div>
+
     <br/>
+    <div  class="form-row">
+        <label for="node-input-target"><i class="fa fa-cogs"></i> Method</label>
+        <select id="node-input-target">
+            <option value="indicators">Indicators</option>
+            <option value="groups">Groups</option>
+            <option value="machines">Machines</option>
+            <option value="location">Location</option>
+            <option value="stream">Stream</option>
+        </select>
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-locationid"><i class="fa fa-tag"></i> LocationId</label>
+        <input type="text" id="node-input-locationid" placeholder="locationid">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-machineid"><i class="fa fa-tag"></i> MachineId</label>
+        <input type="text" id="node-input-machineid" placeholder="machineid">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-groupid"><i class="fa fa-tag"></i> GroupId</label>
+        <input type="text" id="node-input-groupid" placeholder="groupid">
+    </div>
+
 </script>
 
 <!-- Next, some simple help text is provided for the node.                   -->
@@ -18,13 +51,28 @@
 
 <script type="text/javascript">
     RED.nodes.registerType('savvy', {
-        category: 'external',
+        category: 'savvy',
         defaults: {
             name: {
                 value: ""
             },
             endpoint: {
                 value: ""
+            },
+            key: {
+                value: ""
+            },
+            locationid: {
+                value: ""
+            },
+            groupid: {
+                value: ""
+            },
+            machineid: {
+                value: ""
+            },
+            target: {
+                value: "location"
             }
         },
         inputs: 1,
