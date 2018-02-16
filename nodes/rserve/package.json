@@ -1,0 +1,25 @@
+{
+    "name": "rserve-contrib",
+    "version": "0.0.1",
+    "description": "components to interact with the R scripts",
+    "keywords": [
+        "Rserve",
+        "nodered"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/SINTEF-9012/mc-suite_node-red.git"
+    },
+    "author": "SINTEF-9012",
+    "license": "Apache-2.0",
+    "node-red": {
+        "nodes": {
+            "savvy": "rserve.js"
+        }
+    },
+    "dependencies": {
+        "rio":"2.4.1",
+        "dockerode":"2.5.3",
+        "path":"0.12.7"
+    }
+}
