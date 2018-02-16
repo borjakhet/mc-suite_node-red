@@ -25,5 +25,5 @@ For the Savvy nodes:
         
 For the R nodes:
         
-        npm link RServe-contrib
+        npm link rserve-contrib
         
