@@ -7,9 +7,9 @@ If you want to test the latest code from git, here's how to get started:
 1. Clone the code:
 
         git clone https://github.com/SINTEF-9012/mc-suite_node-red.git
-        cd mc-suite_node-red
+        cd mc-suite_node-red/nodes/Savvy (or RServe)
 
-2. Install the dependencies
+2. Install the dependencies. 
 
         npm install
         
