@@ -28,13 +28,6 @@ module.exports = function (RED) {
     var path = require("path");
     var Docker = require('dockerode');
 
-    var args = {};
-
-    args.prods = ["IBM", "MSFT"];
-    args.referenceDate = "Sat, 06 Aug 2011 12:00:00 GMT";
-    // args.targetReturn = undefined;
-    args.lows = [0, 0];
-    args.highs = [1, 1];
 
     // The main node definition - most things happen in here
     function rserveNode(n) {
@@ -42,7 +35,19 @@ module.exports = function (RED) {
         RED.nodes.createNode(this, n);
 
         // Store local copies of the node configuration (as defined in the .html)
-        this.topic = n.topic;
+        this.endpoint = n.endpoint;
+        this.path = n.path;
+
+        var args = {};
+        args.prods = ["IBM", "MSFT"];
+        args.referenceDate = "Sat, 06 Aug 2011 12:00:00 GMT";
+        // args.targetReturn = undefined;
+        args.lows = [0, 0];
+        args.highs = [1, 1];
+        this.args = args;
+
+
+        this.entrypoint=n.entrypoint;
 
         // copy "this" object in case we need it in context of callbacks of other functions.
         var node = this;
@@ -58,10 +63,10 @@ module.exports = function (RED) {
             // in this example just send it straight on... should process it here really
             //node.send(msg);
 
-            getOptimalPortfolio(args, function (res) {
+            callRserve(node, function (res) {
                 var i;
 
-                console.log(res.message);
+                console.log(res);
 
                 node.send(res);
             }, {
@@ -80,11 +85,12 @@ module.exports = function (RED) {
     }
 
 
-    function getOptimalPortfolio(params, callback, config) {
+    function callRserve(node, callback, config) {
+        console.log(node.args);
         var cfg = {
-            filename: path.join(__dirname, "ex2.R"),
-            entrypoint: "getOptimalPortfolio",
-            data: params
+            filename: path.join(__dirname, node.path),
+            entrypoint: node.entrypoint,
+            data: node.args
         };
 
         if (config) {
