@@ -38,13 +38,7 @@ module.exports = function (RED) {
         this.endpoint = n.endpoint;
         this.path = n.path;
 
-        var args = {};
-        args.prods = ["IBM", "MSFT"];
-        args.referenceDate = "Sat, 06 Aug 2011 12:00:00 GMT";
-        // args.targetReturn = undefined;
-        args.lows = [0, 0];
-        args.highs = [1, 1];
-        this.args = args;
+        this.args = n.args;
 
 
         this.entrypoint=n.entrypoint;
@@ -66,9 +60,9 @@ module.exports = function (RED) {
             callRserve(node, function (res) {
                 var i;
 
-                console.log(res);
+                msg.payload=res;
 
-                node.send(res);
+                node.send(msg);
             }, {
                 host: "127.0.0.1"
             });
@@ -104,6 +98,7 @@ module.exports = function (RED) {
             var mess, ans = {};
 
             if (!err) {
+                console.log(">> " +res);
                 ans = JSON.parse(res);
             } else {
                 mess = "Rserve call failed";
@@ -125,7 +120,7 @@ module.exports = function (RED) {
             host: "127.0.0.1",
             port: "2376"
         });
-        docker.pull("gebele/rserve", function (err, stream) {
+        docker.pull("nicolasferry/rserve", function (err, stream) {
             if (stream !== null) {
                 stream.pipe(process.stdout, {
                     end: true
@@ -145,7 +140,7 @@ module.exports = function (RED) {
         var port = '{ "6311/tcp" : [{ "HostIP":"0.0.0.0", "HostPort": "6311" }]}';
 
         var options = {
-            Image: "gebele/rserve",
+            Image: "nicolasferry/rserve",
             AttachStdin: false,
             AttachStdout: true,
             AttachStderr: true,
@@ -163,7 +158,7 @@ module.exports = function (RED) {
         docker.createContainer(options).then(function (container) {
 
             return container.start({}, function (err, data) {
-                runExec(container, 'echo "install.packages(\\"tseries\\", repos=\\"http://cran.us.r-project.org\\")" | R --save ; echo "install.packages(\\"RJSONIO\\", repos=\\"http://cran.us.r-project.org\\")" | R --save');
+                runExec(container, 'echo "install.packages(\\"tseries\\", repos=\\"http://cran.us.r-project.org\\")" | R --save ; echo "install.packages(\\"RJSONIO\\", repos=\\"http://cran.us.r-project.org\\")" | R --save ; echo "install.packages(\\"rmarkdown\\", repos=\\"http://cran.us.r-project.org\\")" | R --save' );
             });
 
         }).catch(function (err) {
