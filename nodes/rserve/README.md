@@ -10,9 +10,9 @@ The node is responsible for:
 ![alt text](https://raw.github.com/SINTEF-9012/mc-suite_node-red/master/documents/rserve.png "RServe")
 
 The node has the following properties:
-* Name:
-* Endpoint:
-* Path to R script:
-* Path to inputs for R script:
-* Inputs for R script as text:
-* Entrypoint:
+* Name: the name of the node
+* Endpoint: the IP of the docker engine
+* Path to R script: the path to the R script to be executed in the docker container
+* Path to inputs for R script: the path to a file containing the inputs for the R script
+* Inputs for R script as text: the inputs for the R script
+* Entrypoint: the method to be called in the R script
