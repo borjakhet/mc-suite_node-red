@@ -89,7 +89,7 @@ module.exports = function (RED) {
         };
 
         if (config) {
-            cfg.host = "127.0.0.1";
+            cfg.host = config.host;
             cfg.port = "6311";
             cfg.user = config.user;
             cfg.password = config.password;
@@ -99,7 +99,6 @@ module.exports = function (RED) {
             var mess, ans = {};
 
             if (!err) {
-                console.log(">> " +res);
                 ans = JSON.parse(res);
             } else {
                 mess = "Rserve call failed";
