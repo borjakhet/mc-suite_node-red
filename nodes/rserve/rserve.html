@@ -35,22 +35,22 @@
     </div>
     <br/>
     <div class="form-row">
-        <label for="node-input-path"><i class="fa fa-server"></i> R script path</label>
+        <label for="node-input-path"><i class="fa fa-server"></i> Path to R script</label>
         <input type="text" id="node-input-path" placeholder="path">
     </div>
     <div class="form-row">
-            <label for="node-input-r_input"><i class="fa fa-server"></i> R script input</label>
+            <label for="node-input-r_input"><i class="fa fa-server"></i> Path to R script input</label>
             <input type="text" id="node-input-r_input" placeholder="r_input">
         </div>
     <br/>
     <div class="form-row">
-        <label for="node-input-args"><i class="fa fa-server"></i> Arguments</label>
+        <label for="node-input-args"><i class="fa fa-server"></i> Arguments for R scripts</label>
         <input type="text" id="node-input-args" placeholder="args">
     </div>
 
     <br/>
     <div class="form-row">
-        <label for="node-input-entrypoint"><i class="fa fa-server"></i> Entrypoint</label>
+        <label for="node-input-entrypoint"><i class="fa fa-server"></i> R script Entrypoint</label>
         <input type="text" id="node-input-entrypoint" placeholder="entrypoint">
     </div>
 
@@ -59,7 +59,7 @@
 
 <!-- Next, some simple help text is provided for the node.                   -->
 <script type="text/x-red" data-help-name="rserve">
-    <p>This node can build, create, and start docker containers</p>
+    <p>This node can create and start a docker container running RServe, install R dependencies, and call a R script.</p>
 </script>
 
 <!-- Finally, the node type is registered along with all of its properties   -->

@@ -62,7 +62,7 @@ module.exports = function (RED) {
 
                 node.send(msg);
             }, {
-                host: "127.0.0.1"
+                host: node.endpoint
             });
 
         });
@@ -83,7 +83,7 @@ module.exports = function (RED) {
             inputs = fs.readFileSync(node.r_input, 'utf8');
         }
         var cfg = {
-            filename: path.join(__dirname, node.path),
+            filename: node.path,
             entrypoint: node.entrypoint,
             data: inputs || node.args
         };
@@ -117,7 +117,7 @@ module.exports = function (RED) {
 
     function buildAndDeploy(node) {
         docker = new Docker({
-            host: "127.0.0.1",
+            host: node.endpoint,
             port: "2376"
         });
         docker.pull("nicolasferry/rserve", function (err, stream) {
