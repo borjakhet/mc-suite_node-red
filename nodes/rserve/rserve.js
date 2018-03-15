@@ -27,6 +27,7 @@ module.exports = function (RED) {
     var rio = require("rio");
     var path = require("path");
     var Docker = require('dockerode');
+    var fs = require('fs');
 
 
     // The main node definition - most things happen in here
@@ -37,15 +38,12 @@ module.exports = function (RED) {
         // Store local copies of the node configuration (as defined in the .html)
         this.endpoint = n.endpoint;
         this.path = n.path;
-
+        this.r_input=n.r_input;
         this.args = n.args;
-
-
         this.entrypoint=n.entrypoint;
 
         // copy "this" object in case we need it in context of callbacks of other functions.
         var node = this;
-
 
 
         buildAndDeploy(node);
@@ -80,11 +78,14 @@ module.exports = function (RED) {
 
 
     function callRserve(node, callback, config) {
-        console.log(node.args);
+        var inputs;
+        if(node.r_input !== ""){
+            inputs = fs.readFileSync(node.r_input, 'utf8');
+        }
         var cfg = {
             filename: path.join(__dirname, node.path),
             entrypoint: node.entrypoint,
-            data: node.args
+            data: inputs || node.args
         };
 
         if (config) {

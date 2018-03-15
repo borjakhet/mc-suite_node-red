@@ -38,7 +38,10 @@
         <label for="node-input-path"><i class="fa fa-server"></i> R script path</label>
         <input type="text" id="node-input-path" placeholder="path">
     </div>
-
+    <div class="form-row">
+            <label for="node-input-r_input"><i class="fa fa-server"></i> R script input</label>
+            <input type="text" id="node-input-r_input" placeholder="r_input">
+        </div>
     <br/>
     <div class="form-row">
         <label for="node-input-args"><i class="fa fa-server"></i> Arguments</label>
@@ -78,6 +81,9 @@
                 value: ""
             },
             entrypoint: {
+                value: ""
+            },
+            r_input: {
                 value: ""
             }
         },
