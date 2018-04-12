@@ -7,6 +7,17 @@
     <br/>
 	
     <div class="form-row">
+        <label for="node-input-cncmanufacturer"><i class="fa fa-globe"></i> CNC manufacturer</label>
+        <select id="node-input-cncmanufacturer">
+            <option value="fagor">Fagor</option>
+            <option value="fanuc">Fanuc</option>
+            <option value="fidia">Fidia</option>
+            <option value="heidenhain">Heidenhain</option>
+            <option value="siemens">Siemens</option>
+        </select>
+    </div>
+	
+    <div class="form-row">
         <label for="node-input-endpoint"><i class="fa fa-globe"></i> Endpoint</label>
         <input type="text" id="node-input-endpoint" placeholder="endpoint">
     </div>
@@ -164,6 +175,9 @@ function methodChange()
             name: {
                 value: ""
             },
+			cncmanufacturer: {
+                value: ""
+            },	
             endpoint: {
                 value: ""
             },
@@ -188,6 +202,330 @@ function methodChange()
             groupid: {
                 value: ""
             },
+            machineid: {
+                value: ""
+            },
+            target: {
+                value: "location"
+            }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "hash.png",
+        color: "#FFFFFF",
+        label: function () {
+            return this.name || " Savvy node ";
+        },
+        labelStyle: function () {
+            return this.name ? "node_label_italic" : "";
+        }
+    });
+</script>
+            <option value="groups">Groups</option>
+            <option value="machines">Machines</option>
+            <option value="location">Location</option>
+            <option value="stream">Stream</option>
+        </select>
+    </div>
+	
+    <div class="form-row" id="location">
+        <label for="node-input-locationid"><i class="fa fa-tag"></i> LocationId</label>
+        <input type="text" id="node-input-locationid" placeholder="locationid">
+    </div>
+
+    <div class="form-row" id="machineid">
+        <label for="node-input-machineid"><i class="fa fa-tag"></i> MachineId</label>
+        <input type="text" id="node-input-machineid" placeholder="machineid">
+    </div>
+
+    <div class="form-row" id="groupId">
+        <label for="node-input-groupid"><i class="fa fa-tag"></i> GroupId</label>
+        <input type="text" id="node-input-groupid" placeholder="groupid">
+    </div>
+
+</script>
+
+<!-- Next, some simple help text is provided for the node.                   -->
+<script type="text/x-red" data-help-name="savvy">
+    <p>This node can be used to connect to the Savvy API. The property endpoint should be used to specify the location of the box endpoint should be defined without the "https" (e.g., api-test.com). The property key will be used to ensure the proper HMAC encryption. The select box Method can be used to specify which method of the API will be called by the node.</p>
+</script>
+
+<script>
+function apiTypeChange()
+{
+	apitype = document.getElementById("node-input-apitype").value;
+
+	portdiv = document.getElementById("port");
+	keydiv = document.getElementById("key");
+	secretdiv = document.getElementById("secret");
+	methoddiv = document.getElementById("method");
+	locationdiv = document.getElementById("location");
+	machinediv = document.getElementById("machineid");
+	machinediv = document.getElementById("machineid");
+	groupIddiv = document.getElementById("groupId");
+	
+	if (apitype === 'cloud')
+	{
+		portdiv.style.display = "none";
+		keydiv.style.display = " block";
+		secretdiv.style.display = " block";
+		methoddiv.style.display = " block";
+		locationdiv.style.display = " block";
+		machinediv.style.display = " block";
+		groupIddiv.style.display = " block";
+
+	}
+	else if (apitype === 'local')
+	{
+		portdiv.style.display = " block";
+		keydiv.style.display = "none";
+		secretdiv.style.display = "none";
+		methoddiv.style.display = "none";
+		locationdiv.style.display = "none";
+		machinediv.style.display = " block";
+		groupIddiv.style.display = "none";
+	}	
+}
+
+function methodChange()
+{
+	methodtype = document.getElementById("node-input-target").value;
+	
+	locationdiv = document.getElementById("location");
+	machinediv = document.getElementById("machineid");
+	groupIddiv = document.getElementById("groupId");
+	
+	switch(methodtype)
+	{
+		case "indicators":
+			locationdiv.style.display = " block";
+			machinediv.style.display = " block";
+			groupIddiv.style.display = " block";
+<script type="text/x-red" data-template-name="savvy">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+
+    <br/>
+	
+	<div class="form-row">
+        <label for="node-input-cncmanufacturer"><i class="fa fa-globe"></i> CNC manufacturer</label>
+        <select id="node-input-cncmanufacturer">
+			<option value="fagor">Fagor</option>
+			<option value="fanuc">Fanuc</option>
+			<option value="fidia">Fidia</option>
+			<option value="heidenhain">Heidenhain</option>
+			<option value="siemens">Siemens</option>
+        </select>
+    </div>
+	
+    <div class="form-row">
+        <label for="node-input-endpoint"><i class="fa fa-globe"></i> Endpoint</label>
+        <input type="text" id="node-input-endpoint" placeholder="endpoint">
+    </div>
+	
+	<div class="form-row">
+        <label for="node-input-returntype"><i class="fa fa-arrow-left"></i> Return</label>
+        <select id="node-input-returntype">
+			<option value="utf-8">a UTF-8 string</option>
+            <option value="json">a parsed JSON object</option>
+        </select>
+    </div>
+	
+    <div  class="form-row" >
+        <label for="node-input-apitype"><i class="fa fa-cogs"></i> API type</label>
+        <select id="node-input-apitype" onchange="apiTypeChange()">
+            <option value="cloud">Cloud (API cloud)</option>
+            <option value="local">Local (RestStreaming)</option>
+        </select>
+    </div>
+	
+	<br>
+	
+	<div class="form-row" id ="port">
+        <label for="node-input-port"><i class="fa fa-tag"></i> Port</label>
+        <input type="text" id="node-input-port" placeholder="port">
+    </div>
+		
+    <div class="form-row" id="key">
+        <label for="node-input-key"><i class="fa fa-tag"></i> Key</label>
+        <input type="text" id="node-input-key" placeholder="key">
+    </div>
+	
+	<div class="form-row" id="secret">
+        <label for="node-input-secret"><i class="fa fa-tag"></i> Secret</label>
+        <input type="text" id="node-input-secret" placeholder="secret">
+    </div>
+
+    <div  class="form-row" id="method">
+        <label for="node-input-target"><i class="fa fa-cogs"></i> Method</label>
+        <select id="node-input-target" onchange="methodChange()">
+            <option value="indicators">Indicators</option>
+            <option value="groups">Groups</option>
+            <option value="machines">Machines</option>
+            <option value="location">Location</option>
+            <option value="stream">Stream</option>
+        </select>
+    </div>
+	
+    <div class="form-row" id="location">
+        <label for="node-input-locationid"><i class="fa fa-tag"></i> LocationId</label>
+        <input type="text" id="node-input-locationid" placeholder="locationid">
+    </div>
+
+    <div class="form-row" id="machineid">
+        <label for="node-input-machineid"><i class="fa fa-tag"></i> MachineId</label>
+        <input type="text" id="node-input-machineid" placeholder="machineid">
+    </div>
+
+    <div class="form-row" id="groupId">
+        <label for="node-input-groupid"><i class="fa fa-tag"></i> GroupId</label>
+        <input type="text" id="node-input-groupid" placeholder="groupid">
+    </div>
+
+</script>
+
+<!-- Next, some simple help text is provided for the node.                   -->
+<script type="text/x-red" data-help-name="savvy">
+    <p>This node can be used to connect to the Savvy API. The property endpoint should be used to specify the location of the box endpoint should be defined without the "https" (e.g., api-test.com). The property key will be used to ensure the proper HMAC encryption. The select box Method can be used to specify which method of the API will be called by the node.</p>
+</script>
+
+<script>
+function apiTypeChange()
+{
+	apitype = document.getElementById("node-input-apitype").value;
+
+	portdiv = document.getElementById("port");
+	keydiv = document.getElementById("key");
+	secretdiv = document.getElementById("secret");
+	methoddiv = document.getElementById("method");
+	locationdiv = document.getElementById("location");
+	machinediv = document.getElementById("machineid");
+	machinediv = document.getElementById("machineid");
+	groupIddiv = document.getElementById("groupId");
+	
+	if (apitype === 'cloud')
+	{
+		portdiv.style.display = "none";
+		keydiv.style.display = " block";
+		secretdiv.style.display = " block";
+		methoddiv.style.display = " block";
+		locationdiv.style.display = " block";
+		machinediv.style.display = " block";
+		groupIddiv.style.display = " block";
+
+	}
+	else if (apitype === 'local')
+	{
+		portdiv.style.display = " block";
+		keydiv.style.display = "none";
+		secretdiv.style.display = "none";
+		methoddiv.style.display = "none";
+		locationdiv.style.display = "none";
+		machinediv.style.display = " block";
+		groupIddiv.style.display = "none";
+	}	
+}
+
+function methodChange()
+{
+	methodtype = document.getElementById("node-input-target").value;
+	
+	locationdiv = document.getElementById("location");
+	machinediv = document.getElementById("machineid");
+	groupIddiv = document.getElementById("groupId");
+	
+	switch(methodtype)
+	{
+		case "indicators":
+			locationdiv.style.display = " block";
+			machinediv.style.display = " block";
+			groupIddiv.style.display = " block";
+			break;
+			
+		case "groups":
+			locationdiv.style.display = " block";
+			machinediv.style.display = " block";
+			groupIddiv.style.display = " none";
+			break;
+			
+		case "machines":
+			locationdiv.style.display = " block";
+			machinediv.style.display = " none";
+			groupIddiv.style.display = " none";
+			break;
+			
+		case "location":
+			locationdiv.style.display = " none";
+			machinediv.style.display = " none";
+			groupIddiv.style.display = " none";
+			break;
+			
+		case "stream":
+			locationdiv.style.display = " none";
+			machinediv.style.display = " block";
+			groupIddiv.style.display = " none";
+			break;
+	}
+}
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('savvy', {
+        category: 'savvy',
+        defaults: {
+            name: {
+                value: ""
+            },
+			cncmanufacturer: {
+                value: ""
+            },	
+            endpoint: {
+                value: ""
+            },
+			returntype: {
+                value: ""
+            },
+			apitype: {
+                value: ""
+            },
+			port: {
+                value: ""
+            },
+            key: {
+                value: ""
+            },
+			secret: {
+                value: ""
+            },
+            locationid: {
+                value: ""
+            },
+            groupid: {
+                value: ""
+            },
+            machineid: {
+                value: ""
+            },
+            target: {
+                value: "location"
+            }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "hash.png",
+        color: "#FFFFFF",
+        label: function () {
+            return this.name || " Savvy node ";
+        },
+        labelStyle: function () {
+            return this.name ? "node_label_italic" : "";
+        }
+    });
+</script>
+
+
             machineid: {
                 value: ""
             },
