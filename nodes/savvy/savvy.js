@@ -16,16 +16,16 @@ module.exports = function (RED) {
         // Store local copies of the node configuration (as defined in the .html)
         this.topic = n.topic;
         this.endpoint = n.endpoint;
-		this.returntype = n.returntype;
-		this.apitype = n.apitype;
-		this.port = n.port;
+        this.returntype = n.returntype;
+        this.apitype = n.apitype;
+        this.port = n.port;
         this.key = n.key;
-		this.secret = n.secret;
+        this.secret = n.secret;
         this.target = n.target;
         this.locationid = n.locationid;
         this.machineid = n.machineid;
         this.groupid = n.groupid;
-		this.cncmanufacturer = n.cncmanufacturer;
+        this.cncmanufacturer = n.cncmanufacturer;
 
         // copy "this" object in case we need it in context of callbacks of other functions.
         var node = this;
@@ -37,19 +37,19 @@ module.exports = function (RED) {
 
             sendGet(msg, method, node, function (res) {
 				
-				console.log("Callback sendGet");
+		console.log("Callback sendGet");
                 var msg = {};
-				switch(node.returntype) {
-					case "utf-8":
-						msg.payload = res;
-						break;
-					case "json":
-						msg.payload = JSON.parse(res);
-						break;
-				}
+		switch(node.returntype) {
+			case "utf-8":
+				msg.payload = res;
+				break;
+			case "json":
+				msg.payload = JSON.parse(res);
+				break;
+		}
 				
-				// Send the CNC manufacturer as msg parameter
-				msg.cncmanufacturer = node.cncmanufacturer;
+		// Send the CNC manufacturer as msg parameter
+		msg.cncmanufacturer = node.cncmanufacturer;
                 node.send(msg);
             });
         });
